@@ -111,7 +111,6 @@ public class AppointmentActivity extends AppCompatActivity {
 
             String[] parts = appt.split("::");
             if (parts.length == 2) {
-                // We now pass the index 'i' so the app knows EXACTLY which one to delete/edit
                 drawAppointmentItem(parts[0], parts[1], i);
             }
         }
@@ -127,7 +126,6 @@ public class AppointmentActivity extends AppCompatActivity {
         txtDocItem.setText("Dr. " + doctor);
         txtDateItem.setText(dateAndTime);
 
-        // 🌟 ADDED: POPUP MENU LOGIC 🌟
         btnMenu.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(AppointmentActivity.this, btnMenu);
             // Add options to the menu (ID 1 for Edit, ID 2 for Delete)
@@ -152,12 +150,8 @@ public class AppointmentActivity extends AppCompatActivity {
         previousApptContainer.addView(view);
     }
 
-    // 🌟 ADDED: EDIT LOGIC 🌟
     private void editAppointment(String doctor, String dateAndTime, int index) {
-        // 1. Put the doctor's name back in the top box
         etDoctorName.setText(doctor);
-
-        // 2. Split the date and time string and put them in their boxes
         String[] dtParts = dateAndTime.split(" @ ");
         if (dtParts.length == 2) {
             tvDate.setText(dtParts[0]);
@@ -171,7 +165,6 @@ public class AppointmentActivity extends AppCompatActivity {
         Toast.makeText(this, "Make changes and click Book Appointment", Toast.LENGTH_LONG).show();
     }
 
-    // 🌟 ADDED: DELETE LOGIC 🌟
     private void deleteAppointment(int indexToRemove) {
         SharedPreferences prefs = getSharedPreferences("Appts", MODE_PRIVATE);
         String listString = prefs.getString("list", "");
@@ -179,15 +172,11 @@ public class AppointmentActivity extends AppCompatActivity {
 
         String[] appointments = listString.split("\\|\\|");
         StringBuilder newAppts = new StringBuilder();
-
-        // Loop through the diary, and copy everything EXCEPT the one we want to delete
         for (int i = 0; i < appointments.length; i++) {
             if (i != indexToRemove && !appointments[i].trim().isEmpty()) {
                 newAppts.append(appointments[i]).append("||");
             }
         }
-
-        // Save the new, updated diary and refresh the screen
         prefs.edit().putString("list", newAppts.toString()).apply();
         loadAppointments();
         Toast.makeText(this, "Appointment deleted", Toast.LENGTH_SHORT).show();
