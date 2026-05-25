@@ -9,14 +9,14 @@ import java.net.URL;
 
 public class EspClient {
 
-    // REMOVED hardcoded IP. This is now populated dynamically via mDNS.
+    // REMOVED hardcoded IP, now populated dynamically via mDNS.
     private static String BASE_URL = null;
 
     public interface Callback {
         void onResult(String res);
     }
 
-    // --- NEW METHODS FOR DYNAMIC IP ---
+    // METHODS FOR DYNAMIC IP
     public static void setBaseUrl(String url) {
         BASE_URL = url;
     }
@@ -25,7 +25,7 @@ public class EspClient {
         return BASE_URL != null;
     }
 
-    // 1️⃣ Read dose taken flag (0/1)
+    // Read dose taken flag (0/1)
     public static void getStatus(Callback cb) {
         if (!hasBaseUrl()) { cb.onResult("ERR"); return; } // Safety check
         new Thread(() -> {
@@ -53,7 +53,7 @@ public class EspClient {
         }).start();
     }
 
-    // 2️⃣ Send alarm time to ESP (slot: 0 breakfast, 1 lunch, 2 dinner)
+    // Send alarm time to ESP (slot: 0 breakfast, 1 lunch, 2 dinner)
     public static void setTime(int slot, int h, int m) {
         if (!hasBaseUrl()) return;
         new Thread(() -> {
@@ -65,7 +65,7 @@ public class EspClient {
         }).start();
     }
 
-    // 3️⃣ Read which dose was active (1/2/3)
+    // Read which dose was active (1/2/3)
     public static void getDose(Callback cb) {
         if (!hasBaseUrl()) { cb.onResult("ERR"); return; }
         new Thread(() -> {
