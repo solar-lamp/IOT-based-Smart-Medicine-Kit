@@ -4,16 +4,13 @@
 #include <Wire.h>
 #include <RTClib.h>
 #include <time.h> 
-
-// --- NEW LIBRARY ---
 #include <WiFiManager.h> 
 
-// (Delete the const char* ssid and pass lines)
 
 ESP8266WebServer server(80);
 RTC_DS3231 rtc;
 
-// ... [Keep all your pins and variables exactly the same] ...
+//pins and variables
 #define TOUCH_PIN D1
 #define LED_BREAKFAST D5
 #define LED_LUNCH D6
@@ -38,7 +35,7 @@ unsigned long doseStartTime = 0;
 // Prevent retrigger in same minute
 int lastTriggeredMinute = -1;
 
-// --- NEW FUNCTION: Sync RTC with the ESP's Network Time ---
+// Sync RTC with the ESP's Network Time
 void syncRTCwithNTP() {
   time_t now = time(nullptr);
   struct tm timeinfo;
@@ -66,7 +63,7 @@ void setup() {
   digitalWrite(LED_LUNCH, LOW);
   digitalWrite(LED_DINNER, LOW);
 
-  // --- NEW: FACTORY RESET TRIGGER ---
+  // FACTORY RESET TRIGGER
   // Hold the touch sensor while booting/resetting to clear Wi-Fi
   delay(500); // Brief pause to give the sensor time to stabilize on boot
   if (digitalRead(TOUCH_PIN) == HIGH) {
@@ -90,11 +87,11 @@ void setup() {
   }
   // --- END FACTORY RESET TRIGGER ---
 
-  // --- WIFIMANAGER SETUP ---
+  //WIFIMANAGER SETUP
   Serial.println("\nStarting WiFiManager...");
   WiFiManager wifiManager;
   
-  // This creates the Access Point. 
+  // Creates the Access Point. 
   // Parameter 1: Name of the AP, Parameter 2: Password for the AP
   bool res = wifiManager.autoConnect("MediSync_Setup", "12345678"); 
 
@@ -105,14 +102,14 @@ void setup() {
     delay(5000);
   }
 
-  // If you get here, you have connected to the WiFi!
+  // WiFi successfully connected
   Serial.println("WiFi connected!");
   Serial.print("ESP IP: ");
   Serial.println(WiFi.localIP());
 
-  // --- RESUME YOUR NORMAL SETUP ---
+  // RTC confugration to NTP for IST
   Serial.print("Configuring NTP for IST (+5:30)...");
-  configTime(19800, 0, "pool.ntp.org", "time.nist.gov");
+  configTime(19800, 0, "pool.ntp.org", "time.nist.gov"); //19800 seconds --> for +5:30hrs
 
   time_t now = time(nullptr);
   while (now < 24 * 3600) {
@@ -146,7 +143,6 @@ void setup() {
     server.send(200, "text/plain", res);
   });
   
-  // (Assuming the rest of your API endpoints like /settime and /clear are still right below this!)
   
   // API: set alarm time
   server.on("/settime", []() {
@@ -176,7 +172,7 @@ void setup() {
     doseMissedFlag = false;  // reset after read
   });
   
-  // TEMP TEST ENDPOINT (remove later if you want)
+  // TEMP TEST ENDPOINT 
   server.on("/testdose", []() {
     doseTakenFlag = true;
     server.send(200, "text/plain", "OK");
@@ -198,7 +194,7 @@ void loop() {
   checkAlarm();
   checkTouch();
 
-  // --- NEW: Sync RTC with NTP every 30 seconds ---
+  // Sync RTC with NTP every 30 seconds 
   if (WiFi.status() == WL_CONNECTED && millis() - lastNtpSync > 30000) {
     lastNtpSync = millis();
     syncRTCwithNTP();
@@ -220,7 +216,7 @@ void loop() {
     Serial.println(now.second());
   }
 }
-
+//Function for checking Alarm
 void checkAlarm() {
   DateTime now = rtc.now();
   int currentTime = now.hour() * 100 + now.minute();
@@ -247,7 +243,7 @@ void checkAlarm() {
     }
   }
 }
-
+//Function for dose activation
 void activateDose(int dose) {
   Serial.print("Activating dose: ");
   Serial.println(dose);
@@ -320,6 +316,4 @@ void endDose() {
   doseActive = false;
   firstTouchDetected = false;
   pillTaken = false;
-  // do NOT touch currentDose here
 }
-// ... [Keep loop(), checkTouch(), checkAlarm(), etc. exactly the same] ...
