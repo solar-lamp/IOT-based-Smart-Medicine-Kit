@@ -43,7 +43,6 @@ public class SettingsActivity extends AppCompatActivity {
         setupBottomNav();
     }
 
-    // 🌟 ADDED: ABOUT DIALOG WITH EASTER EGG 🌟
     private void showAboutDialog() {
         String creators = "Creators: Baador, Potol, Baccha, OGSatarup, and Palm Leaf Soldier";
         String aboutText = "PillMonitor & MEdISyNC Kit\n\n" +
