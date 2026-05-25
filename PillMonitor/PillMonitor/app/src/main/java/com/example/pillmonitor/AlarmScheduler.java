@@ -32,7 +32,6 @@ public class AlarmScheduler {
         }
 
         try {
-            // The VIP Pass for Pill Reminders
             am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pi);
         } catch (SecurityException e) {
             e.printStackTrace(); // Fails safely if Android blocks the alarm
@@ -46,14 +45,14 @@ public class AlarmScheduler {
 
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(d[0]));
-            cal.set(Calendar.MONTH, Integer.parseInt(d[1]) - 1); // Months are 0-indexed!
+            cal.set(Calendar.MONTH, Integer.parseInt(d[1]) - 1); 
             cal.set(Calendar.YEAR, Integer.parseInt(d[2]));
             cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(t[0]));
             cal.set(Calendar.MINUTE, Integer.parseInt(t[1]));
             cal.set(Calendar.SECOND, 0);
 
             Intent i = new Intent(c, AlarmReceiver.class);
-            // We pass this text to the receiver so it knows it's a Doctor Appointment!
+            // Passes this text to the receiver for Doctor Appointment
             i.putExtra("title", "Doctor Appointment");
             i.putExtra("text", note + " at " + time);
 
@@ -64,7 +63,6 @@ public class AlarmScheduler {
             AlarmManager am = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
 
             try {
-                // The VIP Pass for Doctor Appointments
                 am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
             } catch (SecurityException e) {
                 e.printStackTrace();
