@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/nav_medicine"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Medicine"/>
+
+    <item
+        android:id="@+id/nav_activity"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="Activity"/>
+
+    <item
+        android:id="@+id/nav_appointment"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="Appointment"/>
+
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Settings"/>
+
+</menu>

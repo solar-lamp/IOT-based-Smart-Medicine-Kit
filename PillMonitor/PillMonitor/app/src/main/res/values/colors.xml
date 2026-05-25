@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Backgrounds -->
+    <color name="bg_dark">#081225</color>
+    <color name="card_dark">#111827</color>
+    <color name="card_dark_2">#1A2333</color>
+
+    <!-- Primary Colors -->
+    <color name="green_primary">#22C55E</color>
+    <color name="green_light">#4ADE80</color>
+
+    <!-- Accent -->
+    <color name="purple_accent">#8B5CF6</color>
+    <color name="purple_light">#A78BFA</color>
+
+    <!-- Text -->
+    <color name="text_primary">#F9FAFB</color>
+    <color name="text_secondary">#9CA3AF</color>
+
+    <!-- Status -->
+    <color name="success">#22C55E</color>
+    <color name="warning">#FACC15</color>
+    <color name="danger">#EF4444</color>
+
+    <!-- Basic -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <!-- Compatibility Colors -->
+    <color name="green">#22C55E</color>
+    <color name="card_light">#111827</color>
+    <color name="card">#1A2333</color>
+    <color name="icon_gray">#9CA3AF</color>
+    <color name="progress_bg">#2A3441</color>
+    <color name="progress_primary">#8B5CF6</color>
+
+</resources>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <!-- MAIN CONTENT -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNav"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="18dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="30dp">
+
+            <!-- TOP SPACE -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <!-- LOGO -->
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="1500dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitCenter"
+                android:src="@drawable/medisync_logo"
+                android:contentDescription="MediSync Logo"/>
+
+
+
+            <!-- TAGLINE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="Smart Medicine Care, Powered by PillMonitor"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp"/>
+
+            <!-- SUB TAGLINE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="3dp"
+                android:text="Track • Remind • Adhere"
+                android:textColor="@color/green_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <!-- SPACE -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <!-- STATUS TITLE -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="System Status"
+                        android:textColor="@color/text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <!-- STATUS ROW 1 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <!-- ESP STATUS -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/card_dark_2"
+                            app:cardCornerRadius="20dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="ESP Status"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="13sp"/>
+
+                                <TextView
+                                    android:id="@+id/txtEspStatus"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="🟢 Online"
+                                    android:textColor="@color/green_primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- WIFI -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/card_dark_2"
+                            app:cardCornerRadius="20dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="WiFi"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="13sp"/>
+
+                                <TextView
+                                    android:id="@+id/txtWifi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="📶 Stable"
+                                    android:textColor="@color/green_primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <!-- STATUS ROW 2 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <!-- RTC -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/card_dark_2"
+                            app:cardCornerRadius="20dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="RTC Clock"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="13sp"/>
+
+                                <TextView
+                                    android:id="@+id/txtRTC"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="⏰ Synced"
+                                    android:textColor="@color/green_primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- ADHERENCE -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/card_dark_2"
+                            app:cardCornerRadius="20dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Adherence"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="13sp"/>
+
+                                <TextView
+                                    android:id="@+id/txtAdherence"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="💊 --"
+                                    android:textColor="@color/green_primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- SPACE -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"/>
+
+            <!-- MORNING -->
+            <include
+                android:id="@+id/morning"
+                layout="@layout/section_time"/>
+
+            <!-- NOON -->
+            <include
+                android:id="@+id/noon"
+                layout="@layout/section_time"/>
+
+            <!-- NIGHT -->
+            <include
+                android:id="@+id/night"
+                layout="@layout/section_time"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- BOTTOM NAVIGATION -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/card_dark"
+        app:itemIconTint="@color/green_primary"
+        app:itemTextColor="@color/text_secondary"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu"/>
+
+</RelativeLayout>
