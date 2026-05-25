@@ -61,30 +61,19 @@ public class MedicineActivity extends AppCompatActivity {
         txtTotalPills.setText(String.valueOf(totalPills));
     }
 
-    // 🌟 UPDATED: THE CARD GENERATOR 🌟
     private void addMedicineCard(String name, int pills) {
-        // 1. Grab the beautiful XML design you already made
         View view = LayoutInflater.from(this).inflate(R.layout.item_medicine, medicineList, false);
-
-        // Find the root CardView so we can change its background color
         androidx.cardview.widget.CardView cardView = (androidx.cardview.widget.CardView) view;
-
-        // 2. Find the text boxes and progress bar inside that card
         TextView txtName = view.findViewById(R.id.txtName);
         TextView txtCount = view.findViewById(R.id.txtCount);
         ProgressBar progress = view.findViewById(R.id.progress);
         ImageView btnMenu = view.findViewById(R.id.btnMenu);
-
-        // 3. Set the text
         txtName.setText(name);
         txtCount.setText(pills + " pills remaining");
-
-        // 4. Make the progress bar dynamic!
         int maxPills = Math.max(pills, 30);
         progress.setMax(maxPills);
         progress.setProgress(pills);
 
-        // 5. Color-code the progress bar AND the Card background!
         if (pills <= 5) {
             // CRITICAL (5 or less): Bright red bar with a richer, brighter red card background
             progress.setProgressTintList(ColorStateList.valueOf(android.graphics.Color.parseColor("#FF4D4D")));
@@ -101,10 +90,7 @@ public class MedicineActivity extends AppCompatActivity {
             cardView.setCardBackgroundColor(android.graphics.Color.parseColor("#1F452B"));
         }
 
-        // Hide the menu dots on this specific screen to keep it looking like a clean dashboard
         btnMenu.setVisibility(View.GONE);
-
-        // 6. Add the finished card to the screen!
         medicineList.addView(view);
     }
 
