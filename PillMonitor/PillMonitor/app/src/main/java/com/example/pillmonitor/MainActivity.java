@@ -24,7 +24,7 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-// NEW IMPORTS FOR NSD
+//IMPORTS FOR NSD
 import android.content.Context;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
@@ -62,23 +62,20 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         NotificationHelper.createChannels(this);
 
-        // 1. You initialize the views (Your existing code)
         txtEspStatus = findViewById(R.id.txtEspStatus);
         txtWifi = findViewById(R.id.txtWifi);
         txtRTC = findViewById(R.id.txtRTC);
         txtAdherence = findViewById(R.id.txtAdherence);
 
-        // 🌟 2. ADD THE PESSIMISTIC UI CODE RIGHT HERE! 🌟
         // Force the app to assume it is disconnected the second it opens
         txtEspStatus.setText("🔴 Offline");
         txtEspStatus.setTextColor(getResources().getColor(android.R.color.holo_red_light));
         txtRTC.setText("⏳ Waiting...");
         txtRTC.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
-        // 🌟 3. START THE WATCHDOG ENGINE 🌟
+        // START THE WATCHDOG ENGINE
         startHeartbeat();
 
-        // 4. Setup your bottom navigation (Your existing code continues...)
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.nav_home);
 
@@ -90,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
-            // ... (the rest of your bottom nav code)
 
             // MEDICINE
             else if (id == R.id.nav_medicine) {
@@ -465,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
         statusRunnable = new Runnable() {
             @Override
             public void run() {
-                // 🌟 1. THE WATCHDOG (Slow Death) 🌟
+                // THE WATCHDOG 
                 // If the ESP is completely silent for 8 seconds, force offline.
                 if (System.currentTimeMillis() - lastSeenTime > 8000) {
                     txtEspStatus.setText("🔴 Offline");
@@ -482,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
 
                 updateAdherence();
 
-                // 🌟 2. THE FAST POLL (Instant Notifications) 🌟
+                //  THE FAST POLL (Instant Notifications)
                 EspClient.getStatus(res -> {
                     // Only act if we get a perfect, clean response
                     if (res != null && !res.equals("ERR") && !res.isEmpty()) {
@@ -494,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
                         txtRTC.setText("⏰ Synced");
                         txtRTC.setTextColor(getResources().getColor(R.color.green_primary));
 
-                        // --- YOUR INSTANT DOSE LOGIC ---
+                        // --- INSTANT DOSE LOGIC ---
                         if ("1".equals(res) && !lastDoseFlag) {
                             totalScheduledDoses++;
                             lastDoseFlag = true;
@@ -511,11 +507,10 @@ public class MainActivity extends AppCompatActivity {
                         if ("0".equals(res)) lastDoseFlag = false;
 
                     }
-                    // Notice there is NO "else" statement here anymore!
-                    // If a packet drops, we just ignore it. The Watchdog will catch real disconnects.
+                    // If a packet drops,The Watchdog will catch real disconnects.
                 });
 
-                // --- YOUR INSTANT MISSED DOSE LOGIC ---
+                // --- INSTANT MISSED DOSE LOGIC ---
                 EspClient.getMissed(res -> {
                     if ("1".equals(res)) {
                         // Notice the 'true' at the end! This means URGENT!
@@ -523,7 +518,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                // 🌟 3. THE LOOP SPEED 🌟
+
                 // Loop every 2 seconds for that instant, real-time feel!
                 statusHandler.postDelayed(this, 2000);
             }
@@ -564,47 +559,39 @@ public class MainActivity extends AppCompatActivity {
 
         NotificationHelper.show(this, "Dose taken", "Pill count updated from kit", 7001);
 
-        // 🌟 ADDED: Tell the Activity Log that a dose was taken!
         ActivityLogActivity.logEvent(this, "✅ Dose taken", "Pill count updated from kit");
 
         boolean low = false;
         for (Medicine m : meds) {
             if (m.count < 5) low = true;
 
-            // 🌟 ADDED: Send the current number of pills for this medicine to the Activity Log!
             ActivityLogActivity.logEvent(this, "💊 " + m.name, m.count + " pills remaining");
         }
 
         if (low) {
             NotificationHelper.show(this, "Refill medicine", "One of your medicines is running low", 7003, true);
 
-            // 🌟 ADDED: Tell the Activity log about the low medicine warning!
             ActivityLogActivity.logEvent(this, "⚠️ Refill Required", "A medicine is running low");
         }
     }
     private void updateAdherence() {
-        // 1. Open the same Diary the Activity Tab uses
         android.content.SharedPreferences prefs = getSharedPreferences("PillMonitorLogs", MODE_PRIVATE);
         String history = prefs.getString("history", "");
 
         int taken = 0;
         int missed = 0;
-
-        // 2. Count the emojis
         String[] logs = history.split("\\|\\|");
         for (String log : logs) {
             if (log.contains("✅")) taken++;
             else if (log.contains("❌")) missed++;
         }
 
-        // 3. Do the math
         int total = taken + missed;
         int adherence = 0;
         if (total > 0) {
             adherence = (taken * 100) / total;
         }
 
-        // 4. Update the text and colors
         txtAdherence.setText("💊 " + adherence + "%");
 
         if (adherence >= 90) {
