@@ -19,7 +19,7 @@ public class NotificationHelper {
     private static final String CHANNEL_URGENT = "channel_urgent";
     private static final String CHANNEL_NORMAL = "channel_normal";
 
-    // 🌟 Call this ONCE in MainActivity onCreate()
+    // Call this ONCE in MainActivity onCreate()
     public static void createChannels(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager manager = context.getSystemService(NotificationManager.class);
@@ -54,14 +54,13 @@ public class NotificationHelper {
         }
     }
 
-    // 🌟 The Upgraded Show Method (Now takes 'isUrgent' true/false)
+    // Show Method (Now takes 'isUrgent' true/false)
     public static void show(Context c, String title, String text, int id, boolean isUrgent) {
 
-        // Safety First: Your original Android 13+ Permission Check!
         if (Build.VERSION.SDK_INT >= 33) {
             if (ContextCompat.checkSelfPermission(c, android.Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
-                return; // permission not granted → don't crash
+                return; 
             }
         }
 
@@ -73,7 +72,7 @@ public class NotificationHelper {
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(c, channelId)
-                .setSmallIcon(R.mipmap.ic_launcher) // Kept your original icon!
+                .setSmallIcon(R.mipmap.ic_launcher) 
                 .setContentTitle(title)
                 .setContentText(text)
                 .setAutoCancel(true)
@@ -88,16 +87,15 @@ public class NotificationHelper {
         NotificationManagerCompat.from(c).notify(id, builder.build());
     }
 
-    // 🌟 This protects your old code!
     // If a part of your app calls show() without true/false, it defaults to normal.
     public static void show(Context c, String title, String text, int id) {
         show(c, title, text, id, false);
     }
 
-    // 🌟 Kept your Doctor Reminder intact!
+    // Doctor Reminder 
     public static void showDoctorReminder(Context c, String note, String date) {
         String msg = "Doctor appointment: " + note + " on " + date;
-        // Doctor reminders use the normal channel so they don't scream at the user
+        // Doctor reminders use the normal channel 
         show(c, "Doctor Appointment", msg, 8001, false);
     }
 }
