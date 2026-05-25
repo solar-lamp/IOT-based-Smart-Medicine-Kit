@@ -18,15 +18,12 @@ public class ActivityLogActivity extends AppCompatActivity {
     TextView txtAdherence, txtTaken, txtMissed;
     LinearLayout activityContainer;
     Handler handler = new Handler();
-
     boolean lastDoseState = false;
 
-    // 🌟 NEW: THE DIARY WRITER 🌟
-    // This allows any part of your app to save a permanent log!
+
     public static void logEvent(Context context, String title, String subtitle) {
         SharedPreferences prefs = context.getSharedPreferences("PillMonitorLogs", Context.MODE_PRIVATE);
         String oldLogs = prefs.getString("history", "");
-        // We use :: and || as secret dividers to separate the titles and the logs
         String newLog = title + "::" + subtitle + "||" + oldLogs;
         prefs.edit().putString("history", newLog).apply();
     }
@@ -81,7 +78,7 @@ public class ActivityLogActivity extends AppCompatActivity {
         int taken = 0;
         int missed = 0;
 
-        // 2. Read through the Diary and count the emojis!
+        // 2. Read through the Diary 
         String[] logs = history.split("\\|\\|");
         for (String log : logs) {
             if (log.contains("✅")) {
@@ -105,7 +102,6 @@ public class ActivityLogActivity extends AppCompatActivity {
         txtAdherence.setText(adherence + "%");
     }
 
-    // 🌟 NEW: READ FROM THE DIARY 🌟
     public void loadRecentActivity() {
         activityContainer.removeAllViews();
         SharedPreferences prefs = getSharedPreferences("PillMonitorLogs", MODE_PRIVATE);
@@ -132,7 +128,7 @@ public class ActivityLogActivity extends AppCompatActivity {
             @Override
             public void onResult(String res) {
                 if ("1".equals(res)) {
-                    // Write the event into the diary!
+                    // Write the event into the diary
                     logEvent(ActivityLogActivity.this, "✅ Medicine taken", "Just now");
 
                     SharedPreferences prefs = getSharedPreferences("PillMonitor", MODE_PRIVATE);
